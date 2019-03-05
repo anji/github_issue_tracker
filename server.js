@@ -15,14 +15,9 @@ app.get( '/', (req, res, next) => {
   res.sendFile(__dirname + '/index.html');
 });
 
-function makeSearch() {
-  console.log("called successfully");
-  app.get( '/', (req, res, next) => {
-    res.send("Hello World");
-  });
-}
 
-app.post('/clicked', (req, res) => {
-    console.log('clicked on submit');
-    res.send();
+app.post('/results', (req, res) => {
+  // console.log(req.query);
+  console.log("anjani");
+  res.send();
 });
