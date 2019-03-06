@@ -1,10 +1,12 @@
 {
     "main": "server.js",
     "dependencies": {
-        "body-parser": "~1.5.2",
-        "express": "~4.7.2",
-        "method-override": "~2.1.2",
-        "morgan": "~1.2.2",
+        "body-parser": "^1.18.3",
+        "canvas": "^2.3.1",
+        "canvasjs": "^1.8.1",
+        "express": "^4.16.4",
+        "method-override": "^3.0.0",
+        "morgan": "^1.9.1",
         "pug": "^2.0.3",
         "request": "^2.88.0",
         "request-promise": "^4.2.4"

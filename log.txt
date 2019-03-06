@@ -1,0 +1,21 @@
+[33m[nodemon] 1.18.10[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching: *.*[39m
+[32m[nodemon] starting `node server.js`[39m
+listening on 8081
+Checking Issue Stat for: https://github.com/robbyrussell/oh-my-zsh/
+https://api.github.com/repos/robbyrussell/oh-my-zsh/issues
+0
+ana
+ReferenceError: isEmpty is not defined
+    at /Users/anjani/Desktop/algo_ds/github_rough/server.js:41:11
+    at tryCatcher (/Users/anjani/Desktop/algo_ds/github_rough/node_modules/bluebird/js/release/util.js:16:23)
+    at Promise._settlePromiseFromHandler (/Users/anjani/Desktop/algo_ds/github_rough/node_modules/bluebird/js/release/promise.js:512:31)
+    at Promise._settlePromise (/Users/anjani/Desktop/algo_ds/github_rough/node_modules/bluebird/js/release/promise.js:569:18)
+    at Promise._settlePromise0 (/Users/anjani/Desktop/algo_ds/github_rough/node_modules/bluebird/js/release/promise.js:614:10)
+    at Promise._settlePromises (/Users/anjani/Desktop/algo_ds/github_rough/node_modules/bluebird/js/release/promise.js:694:18)
+    at _drainQueueStep (/Users/anjani/Desktop/algo_ds/github_rough/node_modules/bluebird/js/release/async.js:138:12)
+    at _drainQueue (/Users/anjani/Desktop/algo_ds/github_rough/node_modules/bluebird/js/release/async.js:131:9)
+    at Async._drainQueues (/Users/anjani/Desktop/algo_ds/github_rough/node_modules/bluebird/js/release/async.js:147:5)
+    at Immediate.Async.drainQueues [as _onImmediate] (/Users/anjani/Desktop/algo_ds/github_rough/node_modules/bluebird/js/release/async.js:17:14)
+    at processImmediate (timers.js:637:19)

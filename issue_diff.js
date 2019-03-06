@@ -8,7 +8,7 @@ function get_data(git_link) {
         },
         json: true
       };
-
+    // console.log("anjani");
     return request(options)
 }
 
@@ -56,16 +56,54 @@ function convert_to_api_url (url) {
     var u = url.split("github.com");
     var res = u[0] + "api.github.com/repos" + u[1];
     if(res.endsWith("/"))
-        res += "issues"
+        res += "issues?page="
     else
-        res += "/issues"
-    console.log(res);
+        res += "/issues?page="
+    // console.log(res);
     return res;
 }
+
+async function scrape_data(git_link) {
+    let f_total_issues = 0;
+    let f_less_one_day = 0;
+    let f_betw_one_seven = 0;
+    let f_more_than_seven = 0;
+    let page_num=1;
+    let page_link = git_link + page_num;
+    let break_flag = true;
+
+    do {
+      let raw_data = await get_data(page_link);
+      console.log(page_link + " " + Object.keys(raw_data).length);
+      if(Object.keys(raw_data).length == 0 ) {
+        console.log("Empty page received");
+        break_flag = false;
+      }
+      else {
+        var pg_stat = get_issue_stat(raw_data);
+        f_less_one_day += pg_stat.less_one_day;
+        f_total_issues += pg_stat.total_issues;
+        console.log("data :" + f_less_one_day + " " + f_total_issues);
+        page_link = git_link + page_num;
+        page_num++;
+      }
+
+    }while(break_flag);
+
+    let fin_stat = {
+        "f_total_issues": f_total_issues,
+        "f_less_one_day": f_less_one_day,
+        "f_betw_one_seven": f_betw_one_seven,
+        "f_more_than_seven": f_more_than_seven
+      }
+    return fin_stat;
+  }
+
 module.exports = {
     get_data,
     validate_url,
     convert_to_api_url,
-    get_issue_stat
+    get_issue_stat, 
+    scrape_data
 }
 

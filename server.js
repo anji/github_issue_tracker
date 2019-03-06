@@ -2,6 +2,8 @@ const express = require('express');
 var http = require('http');
 const bodyParser = require('body-parser');
 
+
+
 let issue = require('./issue_diff');
 
 const app = express();
@@ -23,21 +25,15 @@ var arr;
 app.post('/results', (req, res) => {
   console.log("Checking Issue Stat for: " + req.body.url_link);
   let git_link = req.body.url_link;
+  
   if(! issue.validate_url(git_link)) {
     console.log("Invalid URL, Check Link");
     return;
   }
   git_link = issue.convert_to_api_url(git_link);
-  whole_response = {};
-  let prom = issue.get_data(git_link);
-  prom.then(
-    function(body) {
-        res.render('shit', issue.get_issue_stat(body));
-    }
-).catch(
-    function (err) {
-        console.log(err);
-    }
-)
+  issue.scrape_data(git_link).then(stats => {
+    res.render('shit', stats);
+  });
+  console.log("finished");
 });
 
