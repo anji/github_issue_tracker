@@ -2,6 +2,8 @@ const express = require('express');
 var http = require('http');
 const bodyParser = require('body-parser');
 
+let issue = require('./issue_diff');
+
 const app = express();
 
 app.use(express.static('public'));
@@ -19,9 +21,26 @@ app.get( '/', (req, res, next) => {
   res.sendFile(__dirname + '/index.html');
 });
 
-
+var arr;
 app.post('/results', (req, res) => {
-  console.log(req.body['git_link']);
-  console.log("anjani");
+  console.log("Checking Issue Stat for: " + req.body['git_link']);
+  let git_link = req.body['git_link'];
+  if(! issue.validate_url(git_link)) {
+    console.log("Invalid URL, Check Link");
+    return;
+  }
+  git_link = issue.convert_to_api_url(git_link);
+  
+  let prom = new Promise(function(resolve, reject) {
+    let results = issue.get_data(git_link);
+    resolve(results);
+  });
+
+  prom.then(function(results) {
+    console.log(results);
+  })
+  console.log("anjani ");
+  
   res.send();
 });
+
