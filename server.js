@@ -7,10 +7,8 @@ let issue = require('./issue_diff');
 const app = express();
 
 app.use(express.static('public'));
-// app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-// app.use(express.json())
-
+app.use(bodyParser.urlencoded({ extended: true }));
+app.set('view engine', 'pug');
 // start the express web server listening on 8081
 app.listen(8081, () => {
   console.log('listening on 8081');
@@ -23,24 +21,23 @@ app.get( '/', (req, res, next) => {
 
 var arr;
 app.post('/results', (req, res) => {
-  console.log("Checking Issue Stat for: " + req.body['git_link']);
-  let git_link = req.body['git_link'];
+  console.log("Checking Issue Stat for: " + req.body.url_link);
+  let git_link = req.body.url_link;
   if(! issue.validate_url(git_link)) {
     console.log("Invalid URL, Check Link");
     return;
   }
   git_link = issue.convert_to_api_url(git_link);
-  
-  let prom = new Promise(function(resolve, reject) {
-    let results = issue.get_data(git_link);
-    resolve(results);
-  });
-
-  prom.then(function(results) {
-    console.log(results);
-  })
-  console.log("anjani ");
-  
-  res.send();
+  whole_response = {};
+  let prom = issue.get_data(git_link);
+  prom.then(
+    function(body) {
+        res.render('shit', issue.get_issue_stat(body));
+    }
+).catch(
+    function (err) {
+        console.log(err);
+    }
+)
 });
 

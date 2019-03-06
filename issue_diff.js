@@ -1,25 +1,19 @@
-const request = require('request');
+const request = require('request-promise');
 
 function get_data(git_link) {
     const options = {
         url: git_link,
         headers: {
           'User-Agent': 'request'
-        }
+        },
+        json: true
       };
 
-    request(options , function (error, response, body) {
-        console.log(response.statusCode);
-        if(response.statusCode === 200)
-          return get_issue_stat(body);
-        else 
-          console.log("Invalid request URL");
-    
-    });
+    return request(options)
 }
 
-function get_issue_stat (data) {
-    var words=JSON.parse(data);
+function get_issue_stat (words) {
+    // var words=JSON.parse(data);
     var total_issues = Object.keys(words).length
     console.log("Total number of open isues: " + total_issues);
 
@@ -71,6 +65,7 @@ function convert_to_api_url (url) {
 module.exports = {
     get_data,
     validate_url,
-    convert_to_api_url
+    convert_to_api_url,
+    get_issue_stat
 }
 
