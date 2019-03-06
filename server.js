@@ -2,18 +2,17 @@ const express = require('express');
 var http = require('http');
 const bodyParser = require('body-parser');
 
-
-
 let issue = require('./issue_diff');
-
 const app = express();
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'pug');
+
+var port = process.env.PORT || 8080 ;
 // start the express web server listening on 8081
-app.listen(8081, () => {
-  console.log('listening on 8081');
+app.listen(port,  () => {
+  console.log('listening on '+ port);
 });
 
 // serve the homepage

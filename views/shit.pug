@@ -1,13 +1,56 @@
-button(onclick="javascript:window.history.go(-1)") search another
 table
-  tr
-    td f_total_issues 
-    td f_less_one_day
-    td f_betw_one_seven
-    td f_more_than_seven
-  tr
-    td= f_total_issues 
-    td= f_less_one_day
-    td= f_betw_one_seven
-    td= f_more_than_seven
+    tr
+      td Total number of open issues : 
+      td= f_total_issues 
+    tr
+      td Issues Raised less than one day:
+      td= f_less_one_day
+    tr
+      td Isses raised between :
+      td= f_betw_one_seven
+    tr
+      td f_more_than_seven :
+      td= f_more_than_seven
+    tr
+button(onclick="javascript:window.history.go(-1)") search another
+
+canvas(id="myChart",width="600",height="400")
+script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js")
+script.
+  var ctx = document.getElementById("myChart");
+  var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+          labels: ["Total number of open issues", "Issues opened less than one day", "Isses opened more than 24 hours ago but less than 7 days ago ", "Issues opened more than 7 days ago"],
+          datasets: [{
+              label: '# of Issues',
+              data: [#{f_total_issues}, #{f_less_one_day}, #{f_betw_one_seven}, #{f_more_than_seven}],
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+              ],
+              borderColor: [
+                  'rgba(255,99,132,1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+        responsive: false,
+        aspectRatio: 1,
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero:true
+                  }
+              }]
+          }
+      }
+  });
+      
 
