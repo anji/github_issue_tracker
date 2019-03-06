@@ -27,6 +27,7 @@ app.post('/results', (req, res) => {
   
   if(! issue.validate_url(git_link)) {
     console.log("Invalid URL, Check Link");
+    res.render("error_page");
     return;
   }
   git_link = issue.convert_to_api_url(git_link);
