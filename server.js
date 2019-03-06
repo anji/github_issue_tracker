@@ -31,7 +31,7 @@ app.post('/results', (req, res) => {
   }
   git_link = issue.convert_to_api_url(git_link);
   issue.scrape_data(git_link).then(stats => {
-    res.render('shit', stats);
+    res.render('results', stats);
   });
   console.log("finished");
 });
