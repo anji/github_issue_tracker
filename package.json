@@ -1,14 +1,22 @@
 {
-    "main": "server.js",
-    "dependencies": {
-        "body-parser": "^1.18.3",
-        "canvas": "^2.3.1",
-        "canvasjs": "^1.8.1",
-        "express": "^4.16.4",
-        "method-override": "^3.0.0",
-        "morgan": "^1.9.1",
-        "pug": "^2.0.3",
-        "request": "^2.88.0",
-        "request-promise": "^4.2.4"
-    }
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "canvas": "^2.3.1",
+    "canvasjs": "^1.8.1",
+    "express": "^4.16.4",
+    "method-override": "^3.0.0",
+    "morgan": "^1.9.1",
+    "pug": "^2.0.3",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "github_issue_counter",
+  "version": "1.0.0",
+  "description": "Counts open issues of given github repository",
+  "author": "Anjani Kumar",
+  "license": "ISC"
 }
