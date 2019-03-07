@@ -6,39 +6,32 @@ Hosted on heroku : https://immense-tundra-24736.herokuapp.com/
 
 ### Prerequisites 
 
-Node.js needs to be installed for local deployment
+Docker should be installed.
 
-In mac, you may install using brew
-
-```
-brew install node
-```
-
-Alternatively use the following link for other package manager installation: https://nodejs.org/en/download/package-manager/
-
-Official website for downloading node: https://nodejs.org/en/ 
+Official website for downloading Docker: https://www.docker.com/
 
 ### Installing
 
-Project dependencies needs to be installed using *npm* which comes bundled with *node*.
-
-For installing project dependencies, use the following command in the root direcctory of project:
+In the root project directory build dockerfile
 
 ```
-npm install
+docker build . --tag deploy
 ```
 
 ## Deployment
 
-Use the following command for local deployment in the project root directory:
+Run docker using the following command for server deployment
 
 ```
-node server.js
+docker run -t deploy -p 8080:8080
 ```
+
+On Success, project is successfully deployed on http://localhost:8080/
 
 ## Built With
 * Express [https://expressjs.com/] - The Web Framework
 * Chart [https://www.chartjs.org/] - For displaying charts
+* Docker [https://www.docker.com/] - For deployment of applications inside software containers 
 
 ## Future Work
 * Integrating with a frontend framwork like Angular/React etc.
