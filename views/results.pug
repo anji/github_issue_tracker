@@ -1,18 +1,20 @@
 table
     tr
+      td Showing stats for : 
+      td= url
+    tr
       td Total number of open issues : 
-      td= f_total_issues 
+      td= stats.f_total_issues 
     tr
       td Issues Raised less than one day ago:
-      td= f_less_one_day
+      td= stats.f_less_one_day
     tr
       td IIsses opened more than 24 hours ago but less than 7 days ago  :
-      td= f_betw_one_seven
+      td= stats.f_betw_one_seven
     tr
       td Issues opened more than 7 days ago :
-      td= f_more_than_seven
+      td= stats.f_more_than_seven
     tr
-button(onclick="javascript:window.history.go(-1)") search another
 
 canvas(id="myChart",width="600",height="400")
 script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js")
@@ -21,10 +23,10 @@ script.
   var myChart = new Chart(ctx, {
       type: 'bar',
       data: {
-          labels: ["Total number of open issues", "Issues opened less than one day ago", "Isses opened more than 24 hours ago but less than 7 days ago ", "Issues opened more than 7 days ago"],
+          labels: ["Total # open issues", "<24 hours ago", "24 hours ago - 7 days", "> 7days ago"],
           datasets: [{
               label: '# of Issues',
-              data: [#{f_total_issues}, #{f_less_one_day}, #{f_betw_one_seven}, #{f_more_than_seven}],
+              data: [#{stats.f_total_issues}, #{stats.f_less_one_day}, #{stats.f_betw_one_seven}, #{stats.f_more_than_seven}],
               backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
                   'rgba(54, 162, 235, 0.2)',
@@ -52,5 +54,6 @@ script.
           }
       }
   });
-      
+button(onclick="javascript:window.history.go(-1)") Request another link
+
 
