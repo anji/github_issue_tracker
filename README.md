@@ -23,7 +23,7 @@ docker build . --tag deploy
 Run docker using the following command for server deployment
 
 ```
-docker run -t deploy -p 8080:8080
+docker run -p 8080:8080 -t deploy
 ```
 
 On Success, project is successfully deployed on http://localhost:8080/
