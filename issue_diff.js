@@ -51,7 +51,7 @@ function validate_url (url) {
   if (myURL.hostname != 'github.com') { return false }
 
   // Check for pathname to be in format "/user/repository/ "
-  let re = new RegExp('(\/([a-zA-Z0-9\-]*)){2}(\/){0,1}$')
+  let re = new RegExp('(\/([a-zA-Z0-9\-\_\.]*)){2}(\/){0,1}$')
   if (re.test(myURL.pathname)) { return true } else { return false }
 }
 
