@@ -13,17 +13,17 @@ function get_data (git_link) {
 
 function get_issue_stat (words) {
   words = words.filter(word => !('pull_request' in word))
-  var less_one_day = 0; var betw_one_seven = 0; var more_than_seven = 0
+  let less_one_day = 0, betw_one_seven = 0, more_than_seven = 0
   let total_issues = Object.keys(words).length
   console.log(Object.keys(words).length)
-  for (var i = 0; i < Object.keys(words).length; i++) {
-    var today = new Date()
-    var then = new Date(words[i]['created_at'])
+  for (let i = 0; i < Object.keys(words).length; i++) {
+    let today = new Date()
+    let then = new Date(words[i]['created_at'])
     let diff_days = (today - then) / 86400000
     if (diff_days <= 1) { less_one_day++ } else if (diff_days > 1 && diff_days <= 7) { betw_one_seven++ } else { break }
   }
   more_than_seven = (total_issues - less_one_day - betw_one_seven)
-  var issue_stat = {
+  let issue_stat = {
     'total_issues': total_issues,
     'less_one_day': less_one_day,
     'betw_one_seven': betw_one_seven,
@@ -36,13 +36,13 @@ function get_issue_stat (words) {
 }
 
 function validate_url (url) {
-  var re = new RegExp('^(http(s){0,1})(:(\/\/))(github\.com)(\/([a-zA-Z0-9\-]*)){2}(\/){0,1}$')
+  let re = new RegExp('^(http(s){0,1})(:(\/\/))(github\.com)(\/([a-zA-Z0-9\-]*)){2}(\/){0,1}$')
   if (re.test(url)) { return true } else { return false }
 }
 
 function convert_to_api_url (url) {
-  var u = url.split('github.com')
-  var res = u[0] + 'api.github.com/repos' + u[1]
+  let u = url.split('github.com')
+  let res = u[0] + 'api.github.com/repos' + u[1]
   if (res.endsWith('/')) { res += 'issues?per_page=100&page=' } else { res += '/issues?per_page=100&page=' }
   // console.log(res);
   return res
@@ -64,7 +64,7 @@ async function scrape_data (git_link) {
       console.log('Empty page received')
       break_flag = false
     } else {
-      var pg_stat = get_issue_stat(raw_data)
+      let pg_stat = get_issue_stat(raw_data)
       f_total_issues += pg_stat.total_issues
       f_less_one_day += pg_stat.less_one_day
       f_betw_one_seven += pg_stat.betw_one_seven

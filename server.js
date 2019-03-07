@@ -8,7 +8,7 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.set('view engine', 'pug')
 
-var port = process.env.PORT || 8080
+let port = process.env.PORT || 8080
 // start the express web server listening on 8081
 app.listen(port, () => {
   console.log('listening on ' + port)
