@@ -1,4 +1,5 @@
 const request = require('request-promise')
+const package_url = require('url');
 
 function get_data (git_link) {
   const options = {
@@ -36,8 +37,17 @@ function get_issue_stat (words) {
 }
 
 function validate_url (url) {
-  let re = new RegExp('^(http(s){0,1})(:(\/\/))(github\.com)(\/([a-zA-Z0-9\-]*)){2}(\/){0,1}$')
-  if (re.test(url)) { return true } else { return false }
+  const myURL = new URL(url);
+  console.log("anjani" + myURL.hostname);
+  console.log("anjani" + myURL.pathname);
+
+  if(myURL.hostname != "github.com")
+    return false;
+  let re = new RegExp('(\/([a-zA-Z0-9\-]*)){2}(\/){0,1}$')
+  if (re.test(myURL.pathname))
+     return true 
+  else 
+    return false
 }
 
 function convert_to_api_url (url) {
