@@ -19,7 +19,7 @@ function get_issue_stat (words) {
   for (var i = 0; i < Object.keys(words).length; i++) {
     var today = new Date()
     var then = new Date(words[i]['created_at'])
-    diff_days = (today - then) / 86400000
+    let diff_days = (today - then) / 86400000
     if (diff_days <= 1) { less_one_day++ } else if (diff_days > 1 && diff_days <= 7) { betw_one_seven++ } else { break }
   }
   more_than_seven = (total_issues - less_one_day - betw_one_seven)
@@ -60,7 +60,7 @@ async function scrape_data (git_link) {
   do {
     let raw_data = await get_data(page_link)
     console.log(page_link + ' ' + Object.keys(raw_data).length)
-    if (Object.keys(raw_data).length == 0) {
+    if (Object.keys(raw_data).length === 0) {
       console.log('Empty page received')
       break_flag = false
     } else {

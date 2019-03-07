@@ -1,5 +1,4 @@
 const express = require('express')
-var http = require('http')
 const bodyParser = require('body-parser')
 
 let issue = require('./issue_diff')
@@ -20,7 +19,6 @@ app.get('/', (req, res, next) => {
   res.sendFile(__dirname + '/index.html')
 })
 
-var arr
 app.post('/results', (req, res) => {
   console.log('Checking Issue Stat for: ' + req.body.url_link)
   let git_link = req.body.url_link

@@ -3,13 +3,13 @@ table
       td Total number of open issues : 
       td= f_total_issues 
     tr
-      td Issues Raised less than one day:
+      td Issues Raised less than one day ago:
       td= f_less_one_day
     tr
-      td Isses raised between :
+      td IIsses opened more than 24 hours ago but less than 7 days ago  :
       td= f_betw_one_seven
     tr
-      td f_more_than_seven :
+      td Issues opened more than 7 days ago :
       td= f_more_than_seven
     tr
 button(onclick="javascript:window.history.go(-1)") search another
@@ -21,7 +21,7 @@ script.
   var myChart = new Chart(ctx, {
       type: 'bar',
       data: {
-          labels: ["Total number of open issues", "Issues opened less than one day", "Isses opened more than 24 hours ago but less than 7 days ago ", "Issues opened more than 7 days ago"],
+          labels: ["Total number of open issues", "Issues opened less than one day ago", "Isses opened more than 24 hours ago but less than 7 days ago ", "Issues opened more than 7 days ago"],
           datasets: [{
               label: '# of Issues',
               data: [#{f_total_issues}, #{f_less_one_day}, #{f_betw_one_seven}, #{f_more_than_seven}],
