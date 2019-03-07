@@ -34,6 +34,10 @@ On Success, project is successfully deployed on http://localhost:8080/
 * Docker [https://www.docker.com/] - For deployment of applications inside software containers 
 
 ## Future Work
+* Make it generic issue tracker for other version control system like gitlab, bitbucket etc
+* Save the fetched data to database to track change in open issue of a repository with time
+* Automate fetching data for required repository
+* Link with github account or any other VCS for tracking starred repositoty automatically
 * Integrating with a frontend framwork like Angular/React etc.
 
 
