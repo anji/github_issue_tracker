@@ -25,12 +25,14 @@ app.post('/results', (req, res) => {
 
   if (!issue.validate_url(git_link)) {
     console.log('Invalid URL, Check Link')
-    res.render('error_page')
+    res.render('error_page', {url: req.body.url_link})
     return
   }
   git_link = issue.convert_to_api_url(git_link)
-  issue.scrape_data(git_link).then(stats => {
+  issue.scrape_data(git_link).then(
+    stats => {
     res.render('results', {stats: stats, url: req.body.url_link})
-  })
+  }).catch(
+    (error) => res.render('error_page', {url: req.body.url_link}))
   console.log('finished')
 })
