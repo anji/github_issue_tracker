@@ -12,11 +12,16 @@
     "request-promise": "^4.2.4"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "standard",
+    "fix": "standard --fix"
   },
   "name": "github_issue_counter",
   "version": "1.0.0",
   "description": "Counts open issues of given github repository",
   "author": "Anjani Kumar",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "standard": "^12.0.1"
+  }
 }
