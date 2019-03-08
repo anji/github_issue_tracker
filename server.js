@@ -13,8 +13,14 @@ app.set('view engine', 'pug')
 
 // Setting port for the server to listen on
 let port = process.env.PORT || 8080
-app.listen(port, () => {
+let server = app.listen(port, () => {
   console.log('listening on ' + port)
+})
+
+server.on('connection', function (socket) {
+  console.log('A new connection was made by a client.')
+  socket.setTimeout(12 * 60 * 1000)
+  // 12 min timeout.
 })
 
 // serve the homepage
@@ -30,7 +36,7 @@ app.post('/results', (req, res) => {
   // Parse URL to validate the fetched link
   if (!issue.validate_url(git_link)) {
     console.log('Invalid URL, Check Link')
-    res.render('error_page', { url: req.body.url_link })
+    res.render('error_page', { url: req.body.url_link, message: 'Invalid URL!' })
     return
   }
 
@@ -44,6 +50,9 @@ app.post('/results', (req, res) => {
       res.render('results', { stats: stats, url: req.body.url_link })
     }).catch(
     // Display error page using pugjs render engine
-    (error) => res.render('error_page', { url: req.body.url_link }))
+    (error) => {
+      console.log(error.message)
+      res.render('error_page', { url: req.body.url_link, message: error.error.message })
+    })
   console.log('finished')
 })

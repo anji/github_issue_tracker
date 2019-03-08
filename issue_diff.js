@@ -3,11 +3,15 @@ const package_url = require('url')
 
 // Using request-promise package for getting json from url
 function get_data (git_link) {
+  let headers = {
+    'User-Agent': 'request'
+  }
+  if ('GITHUB_OAUTH' in process.env) {
+    headers['Authorization'] = `token ${process.env.GITHUB_OAUTH}`
+  }
   const options = {
     url: git_link,
-    headers: {
-      'User-Agent': 'request'
-    },
+    headers: headers,
     json: true
   }
   return request(options)
@@ -59,8 +63,7 @@ function validate_url (url) {
 function convert_to_api_url (url) {
   let u = url.split('github.com')
   let res = u[0] + 'api.github.com/repos' + u[1]
-  if (res.endsWith('/')) { res += 'issues?per_page=100&page=' } else { res += '/issues?per_page=100&page=' }
-  // console.log(res);
+  res += (res.endsWith('/') ? '' : '/') + 'issues?per_page=100&page='
   return res
 }
 
