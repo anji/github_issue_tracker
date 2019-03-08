@@ -1,7 +1,8 @@
 table
     tr
       td Showing stats for : 
-      td= url
+      td
+        a(href=url,target="_blank")= url
     tr
       td Total number of open issues : 
       td= stats.f_total_issues 
