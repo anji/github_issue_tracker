@@ -41,18 +41,18 @@ app.post('/results', (req, res) => {
   }
 
   // Convert user given url into API URL for github api requests
-  git_link = issue.convert_to_api_url(git_link)
-
-  // Scrape data from the API URL
-  issue.scrape_data(git_link).then(
-    stats => {
-    // Display results page using pugjs render engine
-      res.render('results', { stats: stats, url: req.body.url_link })
+  let agg_link = issue.convert_to_api_url(git_link)
+  let num_issues
+  issue.get_data(agg_link.repo).then(
+    repo_data => {
+      num_issues = repo_data.open_issues_count
+      issue.scrape_data(num_issues, agg_link.issue).then((data) => {
+        const aggregated = issue.agg_data(data)
+        res.render('results', { stats: aggregated, url: req.body.url_link })
+      })
     }).catch(
-    // Display error page using pugjs render engine
-    (error) => {
-      console.log(error.message)
+    err => {
+      console.log('error finding repo issues count', err)
       res.render('error_page', { url: req.body.url_link, message: error.error.message })
     })
-  console.log('finished')
 })

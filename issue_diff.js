@@ -63,49 +63,42 @@ function validate_url (url) {
 function convert_to_api_url (url) {
   let u = url.split('github.com')
   let res = u[0] + 'api.github.com/repos' + u[1]
-  res += (res.endsWith('/') ? '' : '/') + 'issues?per_page=100&page='
-  return res
+  let issue = res + (res.endsWith('/') ? '' : '/') + 'issues?per_page=100&page='
+
+  return { 'repo': res, 'issue': issue }
 }
 
+let range = n => Array.from(Array(n).keys())
 // Main function that fetches data for each available list of issues pages and updates total counter
-async function scrape_data (git_link) {
+async function scrape_data (num, issue_link) {
+  let arr = range(parseInt(num / 100) + 1)
+
+  return Promise.all(
+    arr.map(async (x) => {
+      let wrds = await get_data(issue_link + x)
+      return get_issue_stat(wrds)
+    }))
+}
+
+function agg_data (list_stats) {
   let f_total_issues = 0
   let f_less_one_day = 0
   let f_betw_one_seven = 0
   let f_more_than_seven = 0
-  let page_num = 1
-  let page_link = git_link + page_num
-  let break_flag = true
 
-  // Loop till end of number of pages of issue list
-  do {
-    // wait for data to be fetched
-    let raw_data = await get_data(page_link)
-    console.log(page_link + ' ' + Object.keys(raw_data).length)
-    if (Object.keys(raw_data).length === 0) {
-      console.log('Empty page received')
-
-      // Break from the loop if empty response is received
-      break_flag = false
-    } else {
-      let pg_stat = get_issue_stat(raw_data)
-      f_total_issues += pg_stat.total_issues
-      f_less_one_day += pg_stat.less_one_day
-      f_betw_one_seven += pg_stat.betw_one_seven
-      f_more_than_seven += pg_stat.more_than_seven
-
-      page_link = git_link + (++page_num)
-    }
-  } while (break_flag)
-
-  // Return the final count as response object
-  let fin_stat = {
+  for (var i in list_stats) {
+    const pg_stat = list_stats[i]
+    f_total_issues += pg_stat.total_issues
+    f_less_one_day += pg_stat.less_one_day
+    f_betw_one_seven += pg_stat.betw_one_seven
+    f_more_than_seven += pg_stat.more_than_seven
+  }
+  return {
     'f_total_issues': f_total_issues,
     'f_less_one_day': f_less_one_day,
     'f_betw_one_seven': f_betw_one_seven,
     'f_more_than_seven': f_more_than_seven
   }
-  return fin_stat
 }
 
 module.exports = {
@@ -113,5 +106,6 @@ module.exports = {
   validate_url,
   convert_to_api_url,
   get_issue_stat,
-  scrape_data
+  scrape_data,
+  agg_data
 }
