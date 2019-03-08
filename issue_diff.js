@@ -61,9 +61,12 @@ function validate_url (url) {
 
 // Helper function to convert URL to API based URL
 function convert_to_api_url (url) {
+  const myURL = new URL(url)
+
   let u = url.split('github.com')
-  let res = u[0] + 'api.github.com/repos' + u[1]
-  let issue = res + (res.endsWith('/') ? '' : '/') + 'issues?per_page=100&page='
+  let res = u[0] + 'api.github.com/repos' + myURL.pathname
+  res = res.endsWith('/') ? res.substring(0, res.length - 1) : res
+  let issue = res + '/issues?per_page=100&page='
 
   return { 'repo': res, 'issue': issue }
 }
